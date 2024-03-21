@@ -1,0 +1,142 @@
+[{
+  "_id": {
+    "$oid": "65957a3adf84baabfdaa8534"
+  },
+  "name": "Traditional Cappuccino",
+  "category": {
+    "$oid": "659578e68756db353805238b"
+  },
+  "image": "https://th.bing.com/th/id/OIG.h5cLPWn1jEg2105b4Os5?pid=ImgGn",
+  "price": 20,
+  "about": " Traditional Cappuccino is made from espresso, hot milk, and steamed milk. It has a thick layer of foam on top and is usually garnished with cocoa powder or pumpkin spice",
+  "ingredients": [
+    "espresso",
+    "hot milk",
+    "steamed milk"
+  ],
+  "createdAt": {
+    "$date": "2024-01-03T15:16:10.950Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:16:10.950Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65957a9ddf84baabfdaa8537"
+  },
+  "name": "Cappuccino Mocha",
+  "category": {
+    "$oid": "659578e68756db353805238b"
+  },
+  "image": "https://th.bing.com/th/id/OIG.21DSv_Shztcs1EJpp0z9?pid=ImgGn",
+  "price": 25,
+  "about": "Cappuccino Mocha is made from espresso, hot milk, steamed milk, and chocolate. It has a thick layer of foam on top and is usually garnished with cocoa powder",
+  "ingredients": [
+    "espresso",
+    "hot milk",
+    "steamed milk",
+    "chocolate"
+  ],
+  "createdAt": {
+    "$date": "2024-01-03T15:17:49.801Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:17:49.801Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65957b12df84baabfdaa8539"
+  },
+  "name": "Black Cold Brew",
+  "category": {
+    "$oid": "65957957df84baabfdaa852f"
+  },
+  "image": "https://th.bing.com/th/id/OIG.nuyHQkNpRsuKyQ9TeUis?pid=ImgGn",
+  "price": 15,
+  "about": "Black Cold Brew is made by steeping coffee grounds in cold water for an extended period. It has a bold, strong flavor and is less acidic than hot-brewed coffee. Black Cold Brew is usually served with ice or milk",
+  "ingredients": [
+    "coffee grounds",
+    "cold water"
+  ],
+  "createdAt": {
+    "$date": "2024-01-03T15:19:46.104Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:19:46.104Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65957b54df84baabfdaa853b"
+  },
+  "name": "Cold Brew Latte",
+  "category": {
+    "$oid": "65957957df84baabfdaa852f"
+  },
+  "image": "https://th.bing.com/th/id/OIG.GEYuibkzZCOoZKgb2sqg?w=1024&h=1024&rs=1&pid=ImgDetMain",
+  "about": "Cold Brew Latte is made from Cold Brew coffee, milk, and sugar. It has a bold, strong flavor and is less acidic than hot-brewed coffee. Cold Brew Latte is usually served with ice or milk",
+  "ingredients": [
+    "Cold Brew coffee",
+    "milk",
+    "sugar"
+  ],
+  "price": 20,
+  "createdAt": {
+    "$date": "2024-01-03T15:20:52.076Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:20:52.076Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65957cb9df84baabfdaa853d"
+  },
+  "name": "Traditional Espresso",
+  "category": {
+    "$oid": "6595795fdf84baabfdaa8531"
+  },
+  "image": "https://th.bing.com/th/id/OIG.bMBTPqbkraOIy.BnjVgT?pid=ImgGn",
+  "price": 12,
+  "about": "Traditional Espresso is made by forcing hot water under high pressure through finely ground coffee beans. It has a layer of reddish-brown crema on top and is usually served in a small cup",
+  "ingredients": [
+    "hot water",
+    "ground coffee "
+  ],
+  "createdAt": {
+    "$date": "2024-01-03T15:26:49.742Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:26:49.742Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65957d08df84baabfdaa853f"
+  },
+  "name": "Espresso Macchiato",
+  "category": {
+    "$oid": "6595795fdf84baabfdaa8531"
+  },
+  "image": "https://th.bing.com/th/id/OIG.nE2UU7QqM1C4mZ4o.9KM?pid=ImgGn",
+  "price": 18,
+  "about": "Espresso Macchiato is made from espresso and a small amount of steamed milk. It has a layer of reddish-brown crema on top and is usually served in a small cup",
+  "ingredients": [
+    "espresso",
+    "steamed milk"
+  ],
+  "createdAt": {
+    "$date": "2024-01-03T15:28:08.565Z"
+  },
+  "updatedAt": {
+    "$date": "2024-01-03T15:28:08.565Z"
+  },
+  "__v": 0
+}]
