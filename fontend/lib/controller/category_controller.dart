@@ -33,7 +33,6 @@ class CategoryController extends GetxController{
       isLoading.value = false;
       final Map<String, dynamic> data = json.decode(response.body);
       final List<dynamic> result = data['result'];
-      print(result);
       categories.assignAll(result);
     } else {
       isLoading.value = false;

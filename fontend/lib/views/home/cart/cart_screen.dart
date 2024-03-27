@@ -3,6 +3,7 @@ import 'package:fontend/constant/color.dart';
 import 'package:fontend/constant/dimen.dart';
 import 'package:fontend/constant/heading.dart';
 import 'package:fontend/controller/cart_controller.dart';
+import 'package:fontend/controller/order_controller.dart';
 import 'package:fontend/controller/theme_controller.dart';
 import 'package:fontend/models/cart.dart';
 import 'package:fontend/models/product.dart';
@@ -19,12 +20,15 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   final _cartController = Get.put(CartController());
   final _themeController = Get.put(ThemeController());
+  final _orderController = Get.put(OrderController());
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     AppDimen.init(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: _themeController.isDarkMode.value == false
           ? const Color(0xFFF1F4F8)
           : null,
@@ -70,7 +74,7 @@ class _CartScreenState extends State<CartScreen> {
                             itemCount: _cartController.cartItem.length + 1,
                             itemBuilder: (context, index) {
                               if (index == _cartController.cartItem.length) {
-                                return _buildOrderButton();
+                                return _buildOrderButton(context);
                               }
                               Cart cart = _cartController.cartItem[index];
                               Product product = cart.product!;
@@ -162,9 +166,9 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildOrderButton() {
+  Widget _buildOrderButton(context) {
     return GestureDetector(
-      onTap: _placeOrder,
+      onTap: () => _placeOrder(context),
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: AppDimen.screenWidth * 0.1,
@@ -175,19 +179,44 @@ class _CartScreenState extends State<CartScreen> {
             color: primaryColor,
             borderRadius: BorderRadius.all(Radius.circular(30))),
         child: Center(
-            child: Text(
-          'Check Out',
-          style: GoogleFonts.roboto(
-            fontSize: H5,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+          child: Text(
+            'Check Out',
+            style: GoogleFonts.roboto(
+              fontSize: H5,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
 
-  void _placeOrder() {
-    print('Order placed!');
+  void _placeOrder(context) async {
+    List<Cart> carts =
+        _cartController.cartItem.map((item) => item as Cart).toList();
+    await _orderController.orderCoffee(carts);
+    await _cartController.fetchData();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.check,
+              color: Colors.greenAccent,
+            ),
+            Text(
+              'Order successfully',
+              style: GoogleFonts.roboto(
+                color: Colors.greenAccent,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: primaryColor,
+        duration: Durations.extralong3,
+      ),
+    );
   }
 }

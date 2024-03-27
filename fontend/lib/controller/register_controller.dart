@@ -57,7 +57,6 @@ class RegisterController extends GetxController {
       try {
         isLoading.value = true;
 
-        // Gọi API để đăng ký
         final response = await http.post(
           Uri.parse(REGISTER_URL),
           body: {'email': email, 'password': password},
@@ -80,8 +79,6 @@ class RegisterController extends GetxController {
           clearForm();
           Get.to(Login());
         } else {
-          // Xử lý kết quả thất bại
-          print('Đăng ký thất bại ${response.body}');
           final Map<String, dynamic> errorBody = json.decode(response.body);
           final errorMessage = errorBody['message'] ?? 'Registration failed';
 
@@ -99,7 +96,6 @@ class RegisterController extends GetxController {
           );
         }
       } catch (error) {
-        // Xử lý lỗi
         isLoading.value = false;
         print('Lỗi: $error');
       } finally {

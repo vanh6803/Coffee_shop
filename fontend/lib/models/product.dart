@@ -23,7 +23,11 @@ class Product {
     image = json['image'];
     price = json['price'];
     about = json['about'];
-    ingredients = json['ingredients'].cast<String>();
+    if (json['ingredients'] != null) {
+      ingredients = json['ingredients'].cast<String>();
+    } else {
+      ingredients = [];
+    }
   }
 
   Map<String, dynamic> toJson() {

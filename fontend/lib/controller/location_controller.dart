@@ -21,7 +21,6 @@ class LocationController extends GetxController {
         permission = await Geolocator.requestPermission();
         if (permission != LocationPermission.whileInUse &&
             permission != LocationPermission.always) {
-          print("User denied location permission");
           return;
         }
       }
@@ -30,11 +29,7 @@ class LocationController extends GetxController {
         desiredAccuracy: LocationAccuracy.high,
       );
 
-      print("Current position: $position");
-
       userLocation.value = position;
-
-      // Lấy thông tin địa chỉ từ tọa độ
       List<Placemark> placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
@@ -42,7 +37,6 @@ class LocationController extends GetxController {
 
       if (placemarks.isNotEmpty) {
         Placemark placemark = placemarks.first;
-        print("${placemark.subAdministrativeArea} ,${placemark.administrativeArea}");
         userAddress.value = "${placemark.subAdministrativeArea} ,${placemark.administrativeArea}" ?? '';
       } else {
         userAddress.value = 'Unknown Address';

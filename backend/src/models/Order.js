@@ -7,10 +7,14 @@ const orderSchema = new mongoose.Schema(
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         size: String,
-        quantity: Number,
       },
     ],
     totalPrice: Number,
+    status: {
+      type: String,
+      enum: ["Pending", "Pending delivery", "Delivered", "Cancelled"],
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );

@@ -26,7 +26,7 @@ class ProfileController extends GetxController {
 
       if (token != null) {
         final response = await http.get(
-          Uri.parse(PROFILE_URL), // Replace with your API endpoint
+          Uri.parse(PROFILE_URL),
           headers: {
             'Authorization': 'Bearer $token',
             'Content-Type': 'application/json',
@@ -36,9 +36,7 @@ class ProfileController extends GetxController {
         isLoading.value = false;
         print(responseData);
         if (response.statusCode == 200) {
-          print("success");
           user.value = User.fromJson(responseData["result"]);
-          print('${user.value.toString()}');
         } else {
           print('fail ${response.body}');
         }
@@ -55,7 +53,6 @@ class ProfileController extends GetxController {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     });
-    print(response.body);
     if (response.statusCode == 200) {
       Get.offAll(() => Login());
     } else {

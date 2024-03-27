@@ -1,18 +1,14 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:fontend/api/api_url.dart';
-import 'package:fontend/constant/color.dart';
 import 'package:fontend/models/cart.dart';
 import 'package:fontend/models/product.dart';
 import 'package:fontend/utils/cache.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class CartController extends GetxController{
 
-  var cartItem = [].obs;
+  var  cartItem = [].obs;
 
   RxBool isLoading = false.obs;
 
@@ -35,7 +31,6 @@ class CartController extends GetxController{
       isLoading.value = false;
       List<dynamic> jsonResponse = json.decode(response.body);
       cartItem.assignAll(jsonResponse.map((item) => Cart.fromJson(item)));
-      print(cartItem);
     } else {
       isLoading.value = false;
       print(response.body);

@@ -34,7 +34,7 @@ class ProductController extends GetxController {
     filteredProducts.value = listProduct.where((product) {
       return product['name'].toLowerCase().contains(query);
     }).toList();
-    update(); // Notify listeners that the filteredProducts has changed
+    update();
   }
   
 }

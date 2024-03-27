@@ -7,6 +7,7 @@ const authRouter = require("./src/router/Auth");
 const productRouter = require("./src/router/Product");
 const categoryRouter = require("./src/router/Category");
 const cartRouter = require("./src/router/Cart");
+const orderRouter = require("./src/router/Order");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use("/api", authRouter);
 app.use("/api/product", productRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/order", orderRouter);
 
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
