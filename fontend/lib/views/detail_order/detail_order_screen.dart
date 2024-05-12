@@ -40,6 +40,7 @@ class DetailOrderScreen extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontSize: H5,
                       fontWeight: FontWeight.w400,
+                      color: order.status == "Success" ? Colors.green : null,
                     ),
                   ),
                 ],

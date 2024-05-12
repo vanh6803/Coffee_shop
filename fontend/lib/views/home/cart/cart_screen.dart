@@ -22,6 +22,14 @@ class _CartScreenState extends State<CartScreen> {
   final _themeController = Get.put(ThemeController());
   final _orderController = Get.put(OrderController());
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late BuildContext _context;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Save a reference to the context
+    _context = context;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Obx(
-              () {
+                  () {
                 double total = _calculateTotal();
                 return Padding(
                   padding: EdgeInsets.symmetric(
@@ -60,43 +68,43 @@ class _CartScreenState extends State<CartScreen> {
             ),
             Expanded(
               child: Obx(
-                () => _cartController.isLoading.value
+                    () => _cartController.isLoading.value
                     ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                  child: CircularProgressIndicator(),
+                )
                     : _cartController.cartItem.isEmpty
-                        ? const Text("")
-                        : ListView.builder(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppDimen.screenWidth * 0.03,
-                            ),
-                            scrollDirection: Axis.vertical,
-                            itemCount: _cartController.cartItem.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index == _cartController.cartItem.length) {
-                                return _buildOrderButton(context);
-                              }
-                              Cart cart = _cartController.cartItem[index];
-                              Product product = cart.product!;
-                              return Dismissible(
-                                key: Key("${cart.id}"),
-                                onDismissed: (direction) {
-                                  _cartController.deleteCartItem(cart.id!);
-                                },
-                                direction: DismissDirection.endToStart,
-                                background: Container(
-                                  color: Colors.red,
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 20),
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                child: _cartItem(cart, product),
-                              );
-                            },
-                          ),
+                    ? const Text("")
+                    : ListView.builder(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppDimen.screenWidth * 0.03,
+                  ),
+                  scrollDirection: Axis.vertical,
+                  itemCount: _cartController.cartItem.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == _cartController.cartItem.length) {
+                      return _buildOrderButton();
+                    }
+                    Cart cart = _cartController.cartItem[index];
+                    Product product = cart.product!;
+                    return Dismissible(
+                      key: Key("${cart.id}"),
+                      onDismissed: (direction) {
+                        _cartController.deleteCartItem(cart.id!);
+                      },
+                      direction: DismissDirection.endToStart,
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: _cartItem(cart, product),
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -166,9 +174,9 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  Widget _buildOrderButton(context) {
+  Widget _buildOrderButton() {
     return GestureDetector(
-      onTap: () => _placeOrder(context),
+      onTap: () => _placeOrder(),
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: AppDimen.screenWidth * 0.1,
@@ -192,24 +200,22 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  void _placeOrder(context) async {
+  void _placeOrder() async {
     List<Cart> carts =
-        _cartController.cartItem.map((item) => item as Cart).toList();
+    _cartController.cartItem.map((item) => item as Cart).toList();
     await _orderController.orderCoffee(carts);
     await _cartController.fetchData();
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(_context).showSnackBar(
       SnackBar(
         content: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Icon(
               Icons.check,
-              color: Colors.greenAccent,
             ),
             Text(
               'Order successfully',
               style: GoogleFonts.roboto(
-                color: Colors.greenAccent,
               ),
             ),
           ],

@@ -24,9 +24,9 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
   final List<String> statuses = [
     'All',
     "Pending",
-    "Pending delivery",
-    "Delivered",
-    "Cancelled"
+    "In progress",
+    "Success",
+    "Canceled"
   ];
   late String selectedStatus;
 
@@ -52,10 +52,11 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                 itemCount: statuses.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         selectedStatus = statuses[index];
                       });
+                      _orderController.fetchOrder(selectedStatus);
                     },
                     child: Card(
                       color: selectedStatus == statuses[index]
@@ -94,98 +95,181 @@ class _MyOrderScreenState extends State<MyOrderScreen> {
                         ),
                       )
                     : _orderController.orders.isEmpty
-                        ? Center(child: Text("No orders", style: GoogleFonts.roboto(fontWeight: FontWeight.w500, fontSize: H3),))
+                        ? Center(
+                            child: Text(
+                              "No orders",
+                              style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.w500, fontSize: H3),
+                            ),
+                          )
                         : ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: _orderController.orders.length,
                             itemBuilder: (context, index) {
                               Order order = _orderController.orders[index];
                               List<OrderItem>? orderItems = order.productOrder;
-                              return InkWell(
-                                onTap: () {
-                                  Get.to(() => DetailOrderScreen(
-                                        order: order,
-                                      ));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0),
-                                  child: Card(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "${index + 1}",
-                                            style: GoogleFonts.roboto(
-                                              fontSize: H4,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5.0),
-                                            child: Container(
-                                              width: 1,
-                                              height:
-                                                  AppDimen.screenWidth * 0.2,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  'Order Id: ${order.id}',
-                                                  style: GoogleFonts.roboto(
-                                                      fontSize: H6,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Get.to(() => DetailOrderScreen(
+                                                  order: order,
+                                                ));
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                "${index + 1}",
+                                                style: GoogleFonts.roboto(
+                                                  fontSize: H4,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                Row(
-                                                  children: [
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5.0),
+                                                child: Container(
+                                                  width: 1,
+                                                  height: AppDimen.screenWidth *
+                                                      0.2,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
                                                     Text(
-                                                      "Order Product: ",
+                                                      'Order Id: ${order.id}',
+                                                      style: GoogleFonts.roboto(
+                                                          fontSize: H6,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Order Product: ",
+                                                          style: GoogleFonts
+                                                              .roboto(
+                                                                  fontSize: H6),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            orderItems!
+                                                                .map((item) {
+                                                              OrderItem
+                                                                  orderItem =
+                                                                  item;
+                                                              Product product =
+                                                                  orderItem
+                                                                      .product!;
+                                                              return product
+                                                                  .name;
+                                                            }).join(' - '),
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: GoogleFonts
+                                                                .roboto(
+                                                                    fontSize:
+                                                                        H6),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Text(
+                                                      "Total price: \$ ${order.totalPrice}",
                                                       style: GoogleFonts.roboto(
                                                           fontSize: H6),
                                                     ),
-                                                    Expanded(
-                                                      child: Text(
-                                                        orderItems!.map((item) {
-                                                          OrderItem orderItem =
-                                                              item;
-                                                          Product product =
-                                                              orderItem
-                                                                  .product!;
-                                                          return product.name;
-                                                        }).join(' - '),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style:
-                                                            GoogleFonts.roboto(
-                                                                fontSize: H6),
+                                                    Text(
+                                                      "Status: ${order.status}",
+                                                      style: GoogleFonts.roboto(
+                                                        fontSize: H6,
+                                                        color: order.status ==
+                                                                "Success"
+                                                            ? Colors.green
+                                                            : null,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                                Text(
-                                                  "Total price: \$ ${order.totalPrice}",
+                                              ),
+                                              const Icon(Icons.arrow_right)
+                                            ],
+                                          ),
+                                        ),
+                                        // button confirm success
+                                        if (order.status == "In progress")
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 5.0),
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.all(10.0),
+                                            decoration: BoxDecoration(
+                                              color: _themeController
+                                                      .isDarkMode.value
+                                                  ? const Color(0xff8BC34A)
+                                                  : const Color(0xff4CAF50),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: InkWell(
+                                              child: Center(
+                                                child: Text(
+                                                  "Confirm success",
                                                   style: GoogleFonts.roboto(
-                                                      fontSize: H6),
+                                                      fontSize: H6,
+                                                      color: Colors.white),
                                                 ),
-                                                Text(
-                                                  "Status: ${order.status}",
-                                                  style: GoogleFonts.roboto(
-                                                      fontSize: H6),
-                                                ),
-                                              ],
+                                              ),
+                                              onTap: () {
+                                                _orderController
+                                                    .changeStatusOrder(
+                                                        order.id!, "Success");
+                                              },
                                             ),
                                           ),
-                                          const Icon(Icons.arrow_right)
-                                        ],
-                                      ),
+                                        if (order.status == "Pending")
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 5.0),
+                                            width: double.infinity,
+                                            padding: const EdgeInsets.all(10.0),
+                                            decoration: const BoxDecoration(
+                                              color: Colors.redAccent,
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: InkWell(
+                                              child: Center(
+                                                child: Text(
+                                                  "Cancel order",
+                                                  style: GoogleFonts.roboto(
+                                                      fontSize: H6,
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                              onTap: () {
+                                                _orderController
+                                                    .changeStatusOrder(
+                                                        order.id!, "Canceled");
+                                              },
+                                            ),
+                                          )
+                                      ],
                                     ),
                                   ),
                                 ),

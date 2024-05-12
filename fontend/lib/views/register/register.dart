@@ -63,9 +63,7 @@ class Register extends StatelessWidget {
                                 color: primaryColor,
                               ),
                             ),
-                            style: const TextStyle(
-                              color: Colors.black
-                            ),
+                            style: const TextStyle(color: Colors.black),
                             keyboardType: TextInputType.emailAddress,
                             validator: (email) =>
                                 _registerController.emailValidator(email!),
@@ -74,53 +72,51 @@ class Register extends StatelessWidget {
                           ),
                         ),
                         Container(
-                            width: AppDimen.screenWidth,
-                            margin: EdgeInsets.only(
-                                left: AppDimen.screenWidth * 0.05,
-                                right: AppDimen.screenWidth * 0.05,
-                                top: AppDimen.screenWidth * 0.05),
-                            child: Obx(
-                              () => TextFormField(
-                                controller:
-                                    _registerController.passwordController,
-                                decoration: InputDecoration(
-                                  hintText: "Password",
-                                  hintStyle:
-                                      const TextStyle(color: primaryColor),
-                                  border: const OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(50))),
-                                  contentPadding: const EdgeInsets.all(10),
-                                  suffixIcon: GestureDetector(
-                                      onTap: () => _registerController
-                                          .toggleShowPassword(),
-                                      child:
-                                          _registerController.hidePassword.value
-                                              ? const Icon(
-                                                  Icons.visibility_off,
-                                                  color: Colors.grey,
-                                                )
-                                              : const Icon(
-                                                  Icons.visibility,
-                                                  color: Colors.grey,
-                                                )),
-                                  prefixIcon: const Icon(
-                                    Icons.lock,
-                                    color: primaryColor,
-                                  ),
+                          width: AppDimen.screenWidth,
+                          margin: EdgeInsets.only(
+                              left: AppDimen.screenWidth * 0.05,
+                              right: AppDimen.screenWidth * 0.05,
+                              top: AppDimen.screenWidth * 0.05),
+                          child: Obx(
+                            () => TextFormField(
+                              controller:
+                                  _registerController.passwordController,
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                hintStyle: const TextStyle(color: primaryColor),
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50))),
+                                contentPadding: const EdgeInsets.all(10),
+                                suffixIcon: GestureDetector(
+                                    onTap: () => _registerController
+                                        .toggleShowPassword(),
+                                    child:
+                                        _registerController.hidePassword.value
+                                            ? const Icon(
+                                                Icons.visibility_off,
+                                                color: Colors.grey,
+                                              )
+                                            : const Icon(
+                                                Icons.visibility,
+                                                color: Colors.grey,
+                                              )),
+                                prefixIcon: const Icon(
+                                  Icons.lock,
+                                  color: primaryColor,
                                 ),
-                                style: const TextStyle(
-                                    color: Colors.black
-                                ),
-                                validator: (value) => _registerController
-                                    .passwordValidator(value!),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText:
-                                    _registerController.hidePassword.value,
                               ),
-                            )),
+                              style: const TextStyle(color: Colors.black),
+                              validator: (value) =>
+                                  _registerController.passwordValidator(value!),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText:
+                                  _registerController.hidePassword.value,
+                            ),
+                          ),
+                        ),
                         Container(
                           width: AppDimen.screenWidth,
                           margin: EdgeInsets.only(
@@ -156,9 +152,7 @@ class Register extends StatelessWidget {
                                   color: primaryColor,
                                 ),
                               ),
-                              style: const TextStyle(
-                                  color: Colors.black
-                              ),
+                              style: const TextStyle(color: Colors.black),
                               validator: (value) => _registerController
                                   .confirmPasswordValidator(value!),
                               autovalidateMode:
@@ -185,7 +179,9 @@ class Register extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: _themeController.isDarkMode.value ? Colors.black12 : Colors.grey.withOpacity(0.7),
+                                    color: _themeController.isDarkMode.value
+                                        ? Colors.black12
+                                        : Colors.grey.withOpacity(0.7),
                                     spreadRadius: 3,
                                     blurRadius: 6,
                                     offset: const Offset(0, 3),
@@ -225,7 +221,8 @@ class Register extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       Text('You have a account? ', style: GoogleFonts.roboto(color: Colors.black)),
+                      Text('You have a account? ',
+                          style: GoogleFonts.roboto(color: Colors.black)),
                       InkWell(
                         onTap: () {
                           Get.back();

@@ -15,7 +15,7 @@ class OrderController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    fetchOrder();
+    fetchOrder("All");
   }
 
   Future<void> orderCoffee(List<Cart> carts) async {
@@ -32,7 +32,29 @@ class OrderController extends GetxController {
       );
       if (response.statusCode == 201) {
         print("success");
-        fetchOrder();
+        fetchOrder("All");
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  Future<void> changeStatusOrder(String id, String status) async {
+    String? token = await AppCache.getTokenFromCache();
+    isLoading.value = true;
+    try {
+      final response = await http.put(
+        Uri.parse("$ORDER_URL/$id"),
+        body: json.encode({"status": status}),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+      if (response.statusCode == 201) {
+        print("success");
+        fetchOrder("In progress");
       }
     } catch (e) {
       print(e.toString());
@@ -41,11 +63,19 @@ class OrderController extends GetxController {
     }
   }
 
-  Future<void> fetchOrder() async {
+  Future<void> fetchOrder(String? query) async {
     String? token = await AppCache.getTokenFromCache();
     isLoading.value = true;
+
+    String uri;
+    if (query == "Pending" || query == "In progress" || query == "Success" ||query == "Canceled") {
+      uri = "$ORDER_URL?status=$query";
+    } else {
+      uri = ORDER_URL;
+    }
+
     try {
-      final response = await http.get(Uri.parse(ORDER_URL), headers: {
+      final response = await http.get(Uri.parse(uri), headers: {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       });
